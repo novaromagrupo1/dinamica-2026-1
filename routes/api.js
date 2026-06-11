@@ -3,6 +3,7 @@ const router = express.Router();
 
 const TasksController = require("../app/controllers/api/TasksController");
 const UsersController = require("../app/controllers/api/UsersController");
+const BlogController = require("../app/controllers/api/BlogController");
 
 // Rotas das Tarefas
 router.get('/tasks', TasksController.list)
@@ -19,6 +20,14 @@ router.get('/users/:id', TasksController.show)
 router.post('/users', UsersController.save)
 router.delete('/users/:id', UsersController.remove)
 // router.put('/users/:id', UsersController.update)
+
+router.get('/blog', BlogController.list)
+router.get('/blog/create', BlogController.create)
+router.post('/blog/save', BlogController.save)
+router.post('/blog/remove/:id', BlogController.remove)
+router.get('/blog/edit/:id', BlogController.edit)
+router.post('/blog/update', BlogController.update)
+router.post('/blog/update-status/:id', BlogController.updateStatus)
 
 
 router.get('*', function notFound(request, response) {
