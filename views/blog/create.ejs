@@ -1,23 +1,32 @@
 <%- include("includes/header"); %>
 
-<div class="container">
+<div class="container mt-4">
 
-    <h3>Adicionar Tarefa</h3>
+    <h3>Criar Postagem</h3>
     <hr>
 
-    <form method="POST" action="/tasks/save">
+    <form method="POST" action="/blog/save">
+        
         <div class="mb-3">
-          <label for="titulo" class="form-label">Título</label>
-          <input type="text" class="form-control" id="titulo" name="title" aria-describedby="emailHelp">
+            <label for="titulo" class="form-label">Título</label>
+            <input type="text" class="form-control" id="titulo" name="title" required>
         </div>
+        
         <div class="mb-3">
-          <label for="descricao" class="form-label">Descrição</label>
-          <textarea class="form-control" id="descricao" name="description"></textarea>
+            <label for="texto" class="form-label">Texto da Postagem</label>
+            <textarea class="form-control" id="texto" name="text" rows="4"></textarea>
         </div>
+        
+        <div class="mb-3">
+            <label for="data_publicacao" class="form-label">Data de Publicação</label>
+            <input type="date" class="form-control" id="data_publicacao" name="publicationDate">
+        </div>
+        
         <button type="submit" class="btn btn-primary">Salvar</button>
-        <a href="/tasks" class="btn btn-secondary">Cancelar</a>
+        <a href="/blog" class="btn btn-secondary">Cancelar</a>
+        
     </form>
-    
+
 </div>
 
 <%- include("includes/footer"); %>
