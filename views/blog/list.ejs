@@ -1,0 +1,109 @@
+<%- include("../includes/header"); %>
+
+<script>
+    function confirmar(mensagem) {
+        const result = confirm(mensagem);
+        if (!result) {
+            return false;
+        }
+    }
+
+    document.addEventListener("DOMContentLoaded", function() {
+        let filtroAtivo = true; 
+        const btnToggle = document.getElementById("btnToggleFiltro");
+        const linhasPostagens = document.querySelectorAll(".post-row");
+
+        function aplicarFiltro() {
+            // Pega a data de hoje no seu computador e "zera" as horas para meia-noite
+            const hoje = new Date();
+            hoje.setHours(0, 0, 0, 0);
+
+            linhasPostagens.forEach(linha => {
+                const dataPublicacaoStr = linha.getAttribute("data-pub-date");
+                
+                if (!filtroAtivo) {
+                    linha.style.display = ""; 
+                    return;
+                }
+
+                if (dataPublicacaoStr && dataPublicacaoStr !== "null" && dataPublicacaoStr !== "") {
+                    // Quebra o YYYY-MM-DD que vem do banco em três pedaços
+                    const partes = dataPublicacaoStr.split('-');
+                    
+                    if (partes.length === 3) {
+                        const ano = parseInt(partes[0]);
+                        const mes = parseInt(partes[1]) - 1; // No JS, Janeiro é 0 e Dezembro é 11
+                        const dia = parseInt(partes[2]);
+                        
+                        // Monta a data da postagem forçando ela a ficar no fuso horário do seu PC
+                        const dataPublicacao = new Date(ano, mes, dia);
+                        dataPublicacao.setHours(0, 0, 0, 0);
+
+                        // Agora comparamos maçãs com maçãs (Data real com Data real)
+                        if (dataPublicacao > hoje) {
+                            linha.style.display = "none"; // Esconde postagens do futuro
+                        } else {
+                            linha.style.display = ""; // Mostra postagens passadas/hoje
+                        }
+                    }
+                } else {
+                    linha.style.display = ""; // Mostra se não tiver data definida
+                }
+            });
+
+            if (filtroAtivo) {
+                btnToggle.textContent = "Ver Todos (Filtro Ligado)";
+                btnToggle.classList.replace("btn-secondary", "btn-warning");
+            } else {
+                btnToggle.textContent = "Esconder Futuros (Filtro Desligado)";
+                btnToggle.classList.replace("btn-warning", "btn-secondary");
+            }
+        }
+
+        btnToggle.addEventListener("click", function() {
+            filtroAtivo = !filtroAtivo; 
+            aplicarFiltro();
+        });
+
+        aplicarFiltro();
+    });
+</script>
+
+<div class="container mt-4">
+    <h3>Lista de Postagens (Blog)</h3>
+
+    <div class="mb-3 d-flex justify-content-between">
+        <a type="button" class="btn btn-primary" href="/blog/create">Adicionar Postagem</a>
+        <button id="btnToggleFiltro" class="btn btn-warning">Ver Todos (Filtro Ligado)</button>
+    </div>
+    
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Título</th>
+                <th scope="col">Descrição / Texto</th>
+                <th scope="col">Data de Publicação</th>
+                <th scope="col">Opções</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% for(const post of posts) { %>
+            <tr class="post-row" data-pub-date="<%= post.publicationDate ? new Date(post.publicationDate).toISOString().split('T')[0] : '' %>">
+                <td><%= post.title %></td>
+                <td><%= post.text %></td>
+                <td>
+                    <%= post.publicationDate ? new Date(post.publicationDate).toLocaleDateString('pt-BR', {timeZone: 'UTC'}) : 'Não definida' %>
+                </td>
+                <td>
+                    <a type="button" class="btn btn-success" href="/blog/edit/<%= post.id %>">Editar</a>
+                    <form action="/blog/remove/<%= post.id %>" method="POST" style="display: inline-block" onsubmit="return confirmar('Tem certeza que deseja excluir essa postagem?')">
+                        <button type="submit" class="btn btn-danger">Excluir</button>
+                    </form>
+                </td>
+            </tr>
+            <% } %>
+        </tbody>
+    </table>
+</div>
+
+<%- include("../includes/footer"); %>
