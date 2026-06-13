@@ -3,7 +3,7 @@ const router = express.Router();
 
 const TasksController = require("../app/controllers/api/TasksController");
 const UsersController = require("../app/controllers/api/UsersController");
-const BlogController = require("../app/controllers/api/BlogController");
+const BlogController = require("../app/controllers/BlogController");
 
 // Rotas das Tarefas
 router.get('/tasks', TasksController.list)

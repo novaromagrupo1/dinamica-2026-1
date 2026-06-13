@@ -4,7 +4,7 @@ const router = express.Router();
 const NavegacaoController = require("../app/controllers/NavegacaoController");
 const TasksController = require("../app/controllers/TasksController");
 const UsersController = require("../app/controllers/UsersController");
-const BlogController = require("../app/controllers/api/BlogController");
+const BlogController = require("../app/controllers/BlogController");
 
 // Rotas das Tarefas
 router.get('/tasks', TasksController.list)

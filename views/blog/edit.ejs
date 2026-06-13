@@ -1,0 +1,31 @@
+<%- include("includes/header"); %>
+
+<div class="container">
+
+    <h3>Editar Tarefa</h3>
+    <hr>
+
+    <form method="POST" action="/tasks/update">
+        <!-- <input type="hidden" name="_method" value="PUT"> -->
+        <input type="hidden" name="id" value="<%= task.id %>">
+        <div class="mb-3">
+          <label for="titulo" class="form-label">Título</label>
+          <input type="text" class="form-control" id="titulo" name="title" aria-describedby="emailHelp" value="<%= task.title %>">
+        </div>
+        <div class="mb-3">
+          <label for="descricao" class="form-label">Descrição</label>
+          <!-- <input type="text" class="form-control" id="descricao" name="description" value="<%= task.description %>"> -->
+          <textarea class="form-control" id="descricao" name="description"><%= task.description %></textarea>
+
+        </div>
+        <div class="mb-3 form-check">
+          <input type="checkbox" class="form-check-input" id="concluido" name="done" value="1" <%= task.done == 1 ? 'checked' : '' %>>
+          <label class="form-check-label" for="concluido">Concluído </label>
+        </div>
+        <button type="submit" class="btn btn-primary">Salvar</button>
+        <a href="/tasks" class="btn btn-secondary">Cancelar</a>
+      </form>
+    
+</div>
+
+<%- include("includes/footer"); %>

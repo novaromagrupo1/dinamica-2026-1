@@ -1,0 +1,44 @@
+<%- include("../includes/header"); %>
+
+<script>
+    function confirmar(mensagem) {
+        const result = confirm(mensagem);
+        if (!result) {
+            return false;
+        }
+    }
+</script>
+
+<div class="container mt-4">
+    <h3>Lista de Postagens (Blog)</h3>
+
+    <div class="mb-3">
+        <a type="button" class="btn btn-primary" href="/blog/create">Adicionar Postagem</a>
+    </div>
+    
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Título</th>
+                <th scope="col">Descrição / Texto</th>
+                <th scope="col">Opções</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% for(const post of posts) { %>
+            <tr>
+                <td><%= post.title %></td>
+                <td><%= post.text %></td>
+                <td>
+                    <a type="button" class="btn btn-success" href="/blog/edit/<%= post.id %>">Editar</a>
+                    <form action="/blog/remove/<%= post.id %>" method="POST" style="display: inline-block" onsubmit="return confirmar('Tem certeza que deseja excluir essa postagem?')">
+                        <button type="submit" class="btn btn-danger">Excluir</button>
+                    </form>
+                </td>
+            </tr>
+            <% } %>
+        </tbody>
+    </table>
+</div>
+
+<%- include("../includes/footer"); %>
