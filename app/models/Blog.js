@@ -11,11 +11,12 @@ const Blog = sequelize.define('Post', {
   },
   createDate: {
     type: DataTypes.DATE,
+    defaultValue: DataTypes.NOW // <--- O Sequelize preenche com a data/hora atual automaticamente
   },
   publicationDate: {
     type: DataTypes.DATE,
   }
-  
+
 })
 
 module.exports = Blog

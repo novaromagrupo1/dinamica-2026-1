@@ -12,41 +12,44 @@ function BlogRepository() {
     return post;
   }
 
-  async function save(dados) {
+  async function save(data) {
+    // Alinhado para usar 'data' e os campos corretos do Blog (title, text, publicationDate)
     const post = {
-      title: dados.title,
-      description: dados.description,
-      done: false,
+      title: data.title,
+      text: data.text, 
+      publicationDate: data.publicationDate,
     }
 
     const post_created = await Post.create(post);
     return post_created;
   }
 
-  async function update(id, dados) {
-    const post = {
-      title: dados.title,
-      description: dados.description,
-      done: dados.done === '1' ? true : false
-    }
-
-    const post_updated = await Post.update(post, { where: { id: id } });
-    return post_updated;
+  async function update(id, data) {
+    return await Post.update({
+      title: data.title,
+      text: data.text,
+      publicationDate: data.publicationDate
+    }, {
+      where: { id: id }
+    });
   }
 
   async function remove(id) {
     await Post.destroy({ where: { id: id } });
   }
 
-  function updateStatus(id, status) {
+  // Mantido caso você crie alguma funcionalidade de status no futuro, 
+  // mas lembre-se que o model Blog atual não tem o campo 'done'
+  async function updateStatus(id, status) {
     const post = {
       done: status,
     }
 
- 	  const post_updated = Post.update(post, { where: { id: id } });
+    const post_updated = await Post.update(post, { where: { id: id } });
     return post_updated;
   }
 
+  // O return agora está corretamente DENTRO do BlogRepository()
   return {
     list,
     find,
