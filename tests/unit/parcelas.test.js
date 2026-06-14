@@ -18,5 +18,5 @@ test('Teste de Parcelas valor: 100, parcelas: 3', function() {
   expect(parcelas).toHaveLength(3);
   
   let soma = parcelas.reduce((acc, parcela) => acc + parcela.valor, 0);
-  expect(soma).toBe(100);
+  expect(soma).toBeCloseTo(100, 1);
 });

@@ -24,7 +24,7 @@ function UserController() {
     const body = req.body;
 
     if (body.password != body.confirm_password) {
-      res.render('users/create', {
+      return res.render('users/create', {
         error: {
           message: 'Os campos senha e confirmar senha são diferentes.'
         }
@@ -65,20 +65,21 @@ function UserController() {
       .catch((err) => console.log())
   }
 
-  function update(req, res) {
-    console.log(req.body);
-    const id = req.body.id
+function update(req, res) {
+  const id = req.body.id;
 
-    const user = {
-      title: req.body.title,
-      description: req.body.description,
-      done: req.body.done === '1' ? true : false
-    }
-
-    User.update(user, { where: { id: id } })
-      .then(res.redirect('/users'))
-      .catch((err) => console.log(err))
+  const user = {
+    name: req.body.name,
+    email: req.body.email,
+    active: req.body.done === '1' ? 1 : 0 
   }
+
+  User.update(user, { where: { id: id } })
+    .then(() => {
+      res.redirect('/users');
+    })
+    .catch((err) => console.log(err));
+}
 
   function updateStatus(req, res) {
     const id = req.params.id
