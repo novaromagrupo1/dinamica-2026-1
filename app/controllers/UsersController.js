@@ -24,7 +24,7 @@ function UserController() {
     const body = req.body;
 
     if (body.password != body.confirm_password) {
-      res.render('users/create', {
+      return res.render('users/create', {
         error: {
           message: 'Os campos senha e confirmar senha são diferentes.'
         }
