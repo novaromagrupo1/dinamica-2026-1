@@ -1,29 +1,30 @@
 <%- include("includes/header"); %>
 
-<div class="container">
+  <div class="container">
 
     <h3>Editar Usuário</h3>
     <hr>
 
     <form method="POST" action="/users/update">
-        <!-- <input type="hidden" name="_method" value="PUT"> -->
-        <input type="hidden" name="id" value="<%= user.id %>">
-        <div class="mb-3">
-          <label for="nome" class="form-label">Nome</label>
-          <input type="text" class="form-control" id="nome" name="name" value="<%= user.name %>">
-        </div>
-        <div class="mb-3">
-            <label for="email" class="form-label">E-mail</label>
-            <input type="text" class="form-control" id="email" name="email" value="<%= user.email %>">
-        </div>
-        <div class="mb-3 form-check">
-          <input type="checkbox" class="form-check-input" id="concluido" name="done" value="1" <%= user.active == 1 ? 'checked' : '' %>>
-          <label class="form-check-label" for="concluido">Ativo</label>
-        </div>
-        <button type="submit" class="btn btn-primary">Salvar</button>
-        <a href="/users" class="btn btn-secondary">Cancelar</a>
-      </form>
-    
-</div>
+      <!-- <input type="hidden" name="_method" value="PUT"> -->
+      <input type="hidden" name="id" value="<%= user.id %>">
+      <div class="mb-3">
+        <label for="nome" class="form-label">Nome</label>
+        <input type="text" class="form-control" id="nome" name="name" value="<%= user.name %>">
+      </div>
+      <div class="mb-3">
+        <label for="email" class="form-label">E-mail</label>
+        <input type="text" class="form-control" id="email" name="email" value="<%= user.email %>">
+      </div>
+      <div class="mb-3 form-check">
+        <input type="checkbox" class="form-check-input" id="ativo" name="active" value="1" <%=user.active==1 ? 'checked'
+          : '' %>>
+        <label class="form-check-label" for="ativo">Ativo</label>
+      </div>
+      <button type="submit" class="btn btn-primary">Salvar</button>
+      <a href="/users" class="btn btn-secondary">Cancelar</a>
+    </form>
 
-<%- include("includes/footer"); %>
+  </div>
+
+  <%- include("includes/footer"); %>
