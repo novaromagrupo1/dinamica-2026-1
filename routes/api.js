@@ -15,11 +15,11 @@ router.put('/tasks/:id/update-status', TasksController.updateStatus)
 
 
 router.get('/users', UsersController.list)
-router.post('/users/login', UsersController.login)
+// router.post('/users/login', UsersController.login)
 router.get('/users/:id', TasksController.show)
 router.post('/users', UsersController.save)
 router.delete('/users/:id', UsersController.remove)
-// router.put('/users/:id', UsersController.update)
+router.put('/users/:id', UsersController.update)
 
 router.get('/blog', BlogController.list)
 router.get('/blog/create', BlogController.create)
